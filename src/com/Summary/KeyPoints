@@ -1,0 +1,153 @@
+Java Database Connectivity (JDBC):
+
+
+>> mysql will provide the driver class, which will helpful to interact with 
+	mysql database by using java
+	
+>> There are some prerequisties that we need to follow inorder to use the features
+	
+	1.Load the driver class
+	2.Connect to the database
+	3.Create the statement
+	4.Execute the statement
+	5.Process the result
+	
+
+Step : 1
+	
+      >> We use " Class.forName " in order to load the driver class in mysql driver package
+      >> we need to  mention the path clearly
+      >> path follows: 
+      			
+      				loader = com.mysql.cj.jdbc.Driver
+      				Class.forName("loader");
+      				
+      >> we are forcefully loading the driver class
+      >> In current version we dont need to load the class
+      
+
+Step : 2
+      
+      >> Here we have to make the connection to datatbase
+      >> In order to make the connection we need the following:
+      		
+      		1.Connection interface
+      		2.DriverManager
+      		3.getConnection method
+      		4.url : jdbc:mysql://localhost:3306//database_name
+      		5.username: root
+      		6.passoword:root
+      		
+      Connection connection = DriverManager.getConnection(url,username,passoword);
+ 
+ 
+Step : 3
+	
+	  >> Statement is used to create the sql query or commands and used them for further
+	  	 process
+	  >> There are three types of statements and statement is the father of all statements
+	  		
+	  		1.Statement
+	  		
+	  			>> Statement statement = connection.createStatement();
+	  			
+	  		2.PreparedStatement
+	  		
+	  			>>PreparedStatement pStat = connection.prepareStatement( pass the sql query in string format );
+	  			
+	  		3.CallableStatement
+	  			
+	  			>>CallableStatement cStat = connection.prepareCall(call the store procedure in curly braces and that too in string format);
+
+Step : 4
+		
+	  >>Here is the statement will helpful in executing the queries and commands and that will reflect in database
+	  
+	  >> There are many ways to execute the queries:
+	  		
+	  		
+	  		Statement:
+	  		
+			  		1. statement.executeQuery(sql);
+			  				>> this is for complete queries and for read operation
+							
+					 
+					2. statement.executeUpdate(sql);
+							>> this is for update queries
+							>> it will give the number of rows updated
+							
+							
+							
+			PreparedStatement:
+			
+					1. pStat.executeUpdate();
+							>> this is for incomplete queries
+							>> It wont need any arguments
+							>> It will process the sql query and reflect in the database
+							>> It will return the number of rows updated
+					
+					2. pStat.setInt(placeholder,data); and so on
+							>> this is used to set the value to the placeholder in sql query
+							>> It accepts two arguments
+							
+							
+			CallableStatement:
+					
+					1.cStat.setString(1, deptName);
+							>> This is used to set the value in prepare call statement
+		
+					2.cStat.registerOutParameter(2,Types.INTEGER);
+							>> This is used to accept the output from storeprocedeue method from prepare call statement
+							>> It accepts the two parameters
+								
+								1. placeholder
+								2. type of data
+		
+					3.cStat.execute();
+							>> This will execute the the callable statements
+			
+			Execute Batch:
+			
+					1.statement.addBatch(sql);
+							>> This will accept the number of sql statements and store in it,
+							
+					2.statement.executeBatch();
+							>> This will execute all the queries added in the add batch statement
+							
+
+Step : 5
+
+		>> Here we need to process the executed data
+		>> For that we have Result set inteface
+			
+			ResultSet result = null;
+					>> Declaration
+			
+			result = statement.executeQuery(sql);
+					>> This will be helpful to process the table data
+					>> Belongs to statement
+			
+			int[] arr = statement.executeBatch();
+					>> This will give the rows updated number in the form of integer array
+			
+			int i = cStat.getInt();
+					>> This will give the output of store procedure
+					>> Belongs to callable statement
+			
+			result = cStat.getResultSet();
+					>> This will be helpful to process the table data
+					>> Belongs to callable statement
+					
+
+
+these are the five major steps in jdbc in order work with database			
+
+		
+		
+
+							
+	  	
+	  		
+	  
+
+	
